@@ -1,29 +1,29 @@
-package mooc.vandy.java4android.diamonds.ui;
+package mooc.vandy.java4android.birthday.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import mooc.vandy.java4android.diamonds.R;
+import com.example.diamonds.R;
 
-import mooc.vandy.java4android.diamonds.logic.Logic;
-import mooc.vandy.java4android.diamonds.logic.LogicInterface;
+import mooc.vandy.java4android.birthday.logic.Logic;
+import mooc.vandy.java4android.birthday.logic.LogicInterface;
 
 /**
- * The main UI of the App.
+ * Main UI for the App.
  */
-public class MainActivity 
-       extends AppCompatActivity 
-       implements OutputInterface {
+public class MainActivity
+        extends AppCompatActivity
+        implements OutputInterface {
     /**
      * String for LOGGING.
      */
-    private final static String LOG_TAG =
-        MainActivity.class.getCanonicalName();
+    public final static String LOG_TAG =
+            MainActivity.class.getCanonicalName();
 
     /**
      * Logic Instance.
@@ -36,15 +36,20 @@ public class MainActivity
     private TextView mOutput;
 
     /**
-     * The Spinner (drop down selector) that you choose which size to
-     * use.
+     * EditText that stores the size.
      */
-    private Spinner mSizeSpinner;
+    private EditText mSize;
+
+    /**
+     * EditText that stores the count.
+     */
+    private EditText mCount;
 
     /**
      * Called when the activity is starting.
-     *
+     * <p>
      * Similar to 'main' in C/C++/Standalone Java
+     *
      * @param savedInstanceState
      */
     @Override
@@ -62,22 +67,14 @@ public class MainActivity
     /**
      * This method sets up/gets reference to the UI components
      */
-    private void initializeUI(){
+    private void initializeUI() {
         // Set the layout.
         setContentView(R.layout.activity_main);
 
         // Initialize the views.
         mOutput = findViewById(R.id.outputET);
-        mSizeSpinner = findViewById(R.id.sizeSpinner);
-
-        // Initialize the adapter that binds the data to the mMathSpinner widget.
-        ArrayAdapter<CharSequence> mAdapter = ArrayAdapter.createFromResource(this,
-                R.array.diamondSizes,
-                android.R.layout.simple_spinner_item);
-        mAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Associate the ArrayAdapter with the Spinner.
-        mSizeSpinner.setAdapter(mAdapter);
+        mSize = findViewById(R.id.editTextGroupSize);
+        mCount = findViewById(R.id.editTextCount);
     }
 
     /**
@@ -87,7 +84,7 @@ public class MainActivity
      */
     public void buttonPressed(View buttonPress) {
         resetText();
-        mLogic.process(Integer.parseInt(mSizeSpinner.getSelectedItem().toString()));
+        mLogic.process();
     }
 
     /**
@@ -95,6 +92,44 @@ public class MainActivity
      */
     private void addToEditText(String string) {
         mOutput.setText("" + mOutput.getText() + string);
+    }
+
+    /**
+     * Get Size value from displayed UI.
+     */
+    public int getSize() {
+        int value = 0;
+        final String strValue =
+                mSize.getText().toString();
+
+        if (!strValue.isEmpty()) {
+            value = Integer.parseInt(strValue);
+        }
+
+        return value;
+    }
+
+    /**
+     * Get Count value from displayed UI.
+     */
+    public int getCount() {
+        int value = 0;
+        final String strValue =
+                mCount.getText().toString();
+
+        if (!strValue.isEmpty()) {
+            value = Integer.parseInt(strValue);
+        }
+
+        return value;
+    }
+
+    /**
+     * Make a Toast from Logic
+     */
+    @Override
+    public void makeAlertToast(String alertText) {
+        Toast.makeText(this, alertText, Toast.LENGTH_LONG).show();
     }
 
     /**
