@@ -1,4 +1,4 @@
-package mooc.vandy.java4android.shapes.logic;
+package mooc.vandy.java4android.diamonds.logic;
 
 /**
  * This Interface exists to help simplify the interactions between the
@@ -6,15 +6,13 @@ package mooc.vandy.java4android.shapes.logic;
  * the Logic class [Logic.java].
  *
  * This Interface defines the 'void process()' method that
- * [Logic.java] will promise to implement. This allows
+ * [Logic.java] will promise to implement. This design allows
  * [MainActivity.java] to store an instance of [Logic.java] inside a
  * 'LogicInterface' variable (mLogic inside [MainActivity.java])
  */
 public interface LogicInterface {
     /**
-     * This method gets called (indirectly through
-     * [MainActivity.java]) when the button labeled 'Process...' is
-     * pressed.
+     * Perform the computation.
      */
-    void process();
+    void process(int size);
 }
