@@ -1,61 +1,57 @@
-package mooc.vandy.java4android.buildings.logic;
+package mooc.vandy.java4android.calculator.logic;
 
-import mooc.vandy.java4android.buildings.ui.OutputInterface;
+import java.util.HashMap;
+
+import mooc.vandy.java4android.calculator.ui.ActivityInterface;
 
 /**
- * This is where the logic of this App is centralized for this
- * assignment.
- * <p>
- * The assignments are designed this way to simplify your early
- * Android interactions.  Designing the assignments this way allows
- * you to first learn key 'Java' features without having to beforehand
- * learn the complexities of Android.
+ * Performs an operation selected by the user.
  */
-public class Logic 
-       implements LogicInterface {
+public class Logic implements LogicInterface {
     /**
-     * Used for logging.
+     * Reference to the Activity output.
      */
-    public static final String TAG =
-        Logic.class.getName();
-
-    /**
-     * Reference to the output object.
-     */
-    private OutputInterface mOut;
-
+    protected ActivityInterface mOut;
+    private int ADD=1;
+    private int SUB=2;
+    private int MULTI=3;
+    private int DIV=4;
+    
     /**
      * Constructor initializes the field.
      */
-    public Logic(OutputInterface out){
+    public Logic(ActivityInterface out) {
         mOut = out;
+        
     }
 
+    
+
     /**
-     * Perform the computation to print the houses and offices and the
-     * total neighborhood area.
+     * Perform the operation on argumentOne and argumentTwo.
      */
-    @Override
-    public void process() {
-        // Get the list of all the buildings.
-        final BuildingList list =
-            new BuildingList();
-
-        // Get the list of houses.
-        final House[] house =
-            list.getHouses();
-
-        // Get the list of offices.
-        final Office[] office =
-            list.getOffices();
-
-        Neighborhood.print(house, "Houses", mOut);
-        mOut.println("");
-        Neighborhood.print(office, "Offices", mOut);
-
-        mOut.println("");
-        mOut.println("Total neighborhood area: " +
-                     (Neighborhood.calcArea(house) +
-                      Neighborhood.calcArea(office)));
+    public void process(int argumentOne, int argumentTwo, int operation) {
+        // TODO - Put your code here.
+        if(operation==ADD){
+            int temp = argumentOne+argumentTwo;
+            String s = String.valueOf(temp);
+            mOut.print(s);
+        }
+        else if(operation==SUB){
+            int temp = argumentOne-argumentTwo;
+            String s = String.valueOf(temp);
+            mOut.print(s);
+        }
+        else if(operation==MULTI){
+            int temp = argumentOne*argumentTwo;
+            String s = String.valueOf(temp);
+            mOut.print(s);
+        }
+        else if(operation==DIV){
+            int temp1 = argumentOne/argumentTwo;
+            int temp2 = argumentOne%argumentTwo;
+            String s = String.valueOf(temp1)+" R"+String.valueOf(temp2);
+            mOut.print(s);
+        }
     }
 }
