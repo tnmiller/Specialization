@@ -1,17 +1,15 @@
-package mooc.vandy.java4android.birthday.ui;
+package com.example.accountapp.ui;
 
-import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.diamonds.R;
-
-import mooc.vandy.java4android.birthday.logic.Logic;
-import mooc.vandy.java4android.birthday.logic.LogicInterface;
+import com.example.accountapp.R;
+import com.example.accountapp.logic.Logic;
+import com.example.accountapp.logic.LogicInterface;
 
 /**
  * Main UI for the App.
@@ -19,10 +17,11 @@ import mooc.vandy.java4android.birthday.logic.LogicInterface;
 public class MainActivity
         extends AppCompatActivity
         implements OutputInterface {
+
     /**
      * String for LOGGING.
      */
-    public final static String LOG_TAG =
+    private final static String LOG_TAG =
             MainActivity.class.getCanonicalName();
 
     /**
@@ -36,20 +35,14 @@ public class MainActivity
     private TextView mOutput;
 
     /**
-     * EditText that stores the size.
+     * Button the user presses to perform the computation.
      */
-    private EditText mSize;
-
-    /**
-     * EditText that stores the count.
-     */
-    private EditText mCount;
+    private Button mProcessButton;
 
     /**
      * Called when the activity is starting.
-     * <p>
-     * Similar to 'main' in C/C++/Standalone Java
      *
+     * Similar to 'main' in C/C++/Standalone Java
      * @param savedInstanceState
      */
     @Override
@@ -65,16 +58,15 @@ public class MainActivity
     }
 
     /**
-     * This method sets up/gets reference to the UI components
+     * This method sets up/gets reference to the UI components.
      */
-    private void initializeUI() {
+    private void initializeUI(){
         // Set the layout.
         setContentView(R.layout.activity_main);
 
         // Initialize the views.
         mOutput = findViewById(R.id.outputET);
-        mSize = findViewById(R.id.editTextGroupSize);
-        mCount = findViewById(R.id.editTextCount);
+        mProcessButton = findViewById(R.id.button);
     }
 
     /**
@@ -90,46 +82,8 @@ public class MainActivity
     /**
      * Add @a string to the EditText.
      */
-    private void addToEditText(String string) {
+    private void addToEditText(String string){
         mOutput.setText("" + mOutput.getText() + string);
-    }
-
-    /**
-     * Get Size value from displayed UI.
-     */
-    public int getSize() {
-        int value = 0;
-        final String strValue =
-                mSize.getText().toString();
-
-        if (!strValue.isEmpty()) {
-            value = Integer.parseInt(strValue);
-        }
-
-        return value;
-    }
-
-    /**
-     * Get Count value from displayed UI.
-     */
-    public int getCount() {
-        int value = 0;
-        final String strValue =
-                mCount.getText().toString();
-
-        if (!strValue.isEmpty()) {
-            value = Integer.parseInt(strValue);
-        }
-
-        return value;
-    }
-
-    /**
-     * Make a Toast from Logic
-     */
-    @Override
-    public void makeAlertToast(String alertText) {
-        Toast.makeText(this, alertText, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -151,5 +105,14 @@ public class MainActivity
         addToEditText(text);
         String debug = text.replace("\n", "\\n");
         Log.d(LOG_TAG, "print(" + debug + ")");
+    }
+
+    /**
+     * Allow Logic to print Log statements without requiring
+     * dependency.
+     */
+    @Override
+    public void log(String logtext) {
+        Log.d(Logic.TAG, logtext);
     }
 }
